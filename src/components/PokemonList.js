@@ -26,6 +26,12 @@ export default function PokemonList() {
         spattack: null,
         spdefense: null,
     })
+    const [profile, setProfile] = useState({
+        height: null,
+        weight: null,
+        base: null,
+        ability: [],
+    })
 
 
     useEffect(() => {
@@ -88,10 +94,25 @@ export default function PokemonList() {
                     attack: data.stats[4].base_stat,
                 }))
 
+                //Checking if the abilities array has only 0 index
+
+                setProfile(prev => ({
+                    ...prev,
+                    height: data.height,
+                    weight: data.weight,
+                    base: data.base_experience,
+                    ability: data.abilities,
+                }))
+
+
+
                 setModalState(true);
 
             })
     }
+
+
+    console.log(profile.ability[0]);
 
     return (
 
@@ -148,7 +169,16 @@ export default function PokemonList() {
                             <li className="bar"><span style={{ width: `${stats.speed}px` }}>{stats.speed}</span></li>
                         </ul>
                     </div>
+
+
                     <div>
+                        <ul>
+                            <li className="banner">Profile</li>
+                            <li>Height : <p>{profile.height / 10} m</p></li>
+                            <li>Weight : <p>{profile.weight / 10} kg</p></li>
+                            <li>Base Experience : <p>{profile.base}</p></li>
+                            <li>Abilities : <p>{profile.ability[0]}, {profile.ability[1]}</p></li>
+                        </ul>
                     </div>
                 </div>
 

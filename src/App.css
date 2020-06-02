@@ -63,6 +63,8 @@ input:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 30px;
 }
 
 .pagination {
@@ -92,6 +94,7 @@ input[type="search"] {
     font-weight: normal;
     text-transform: capitalize;
     color: #222;
+    margin-bottom: 15px;
 }
 
 #modal h1 span {
@@ -193,4 +196,27 @@ input[type="search"] {
     display: block;
     height: 100%;
     padding-top: 3px;
+}
+
+.inside div:nth-child(2){
+    display: flex;
+    justify-content: space-evenly;
+    text-align: left;
+}
+
+.inside div:nth-child(2) li{
+    display: block;
+    margin: 30px 0;
+}
+
+.inside div:nth-child(2) li p{
+    font-size: 14px;
+    color: #333;
+    display: inline;
+}
+
+.banner{
+    background: #eee;
+    font-size: 20px;
+    padding: 8px;
 }
