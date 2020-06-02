@@ -6,7 +6,7 @@
 
 html, body, #root, .App {
     height: 100%;
-    background: #eee;
+    background: #E3350D;
 }
 
 button {
@@ -14,13 +14,16 @@ button {
     cursor: pointer;
 }
 
-.main{
+input:focus {
+    outline: none;
+}
+
+.main {
     text-align: center;
 }
 
 .pokemon_list {
     margin: auto;
-    width: 90%;
     text-transform: capitalize;
 }
 
@@ -31,9 +34,28 @@ button {
     background: #fff;
     margin: 1%;
     padding: 40px;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, .2);
+    width: 20%;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.pokemon_list ul li:focus {
+    background: red;
+}
+
+.pokemon_list ul li img {
+    user-select: none;
+}
+
+.pokemon_list h2 {
+    font-weight: normal;
+    color: #222;
+}
+
+.pokemon_list p {
+    font-size: 20px;
+    margin: 5px 0;
+    color: #666;
 }
 
 .loading {
@@ -49,4 +71,126 @@ button {
 
 .pagination button {
     margin: 1%;
+}
+
+input[type="search"] {
+    width: 100%;
+    border: 0;
+    padding: 20px;
+    font-size: 20px;
+}
+
+#modal {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+#modal h1 {
+    font-weight: normal;
+    text-transform: capitalize;
+    color: #222;
+}
+
+#modal h1 span {
+    color: #666;
+}
+
+#modal .inside {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.inside div {
+    flex: 1;
+}
+
+.inside div .types li {
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 10px;
+    text-transform: uppercase;
+}
+
+.inside div .types li[name="poison"] {
+    background: #934b92;
+}
+
+.inside div .types li[name="grass"] {
+    background: #69c23d;
+}
+
+.inside div .types li[name="fire"] {
+    background: #ed6f35;
+}
+
+.inside div .types li[name="water"] {
+    background: #94b7e7;
+}
+
+.inside div .types li[name="bug"] {
+    background: #a8b928;
+}
+
+.inside div .types li[name="flying"] {
+    background: #aaa;
+}
+
+.inside div .types li[name="normal"] {
+    background: #a8a878;
+}
+
+.inside div .types li[name="electric"] {
+    background: #f8d03c;
+}
+
+.inside div .types li[name="fairy"] {
+    background: #ef99ac;
+}
+
+.inside div .types li[name="fighting"] {
+    background: #c03028;
+}
+
+.inside div .types li[name="psychic"] {
+    background: #f65888;
+}
+
+.inside div .types li[name="ground"] {
+    background: #e0bf68;
+}
+
+.inside div .types li[name="ice"] {
+    background: #98d8d8;
+}
+
+.stats {
+    margin-top: 10%;
+    font-size: 12px;
+}
+
+.stats li {
+    display: block;
+}
+
+.bar {
+    width: 300px;
+    height: 20px;
+    background: #eee;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 6px;
+    color: #fff;
+    overflow: hidden;
+}
+
+.bar span {
+    background: rgb(227, 53, 13);
+    display: block;
+    height: 100%;
+    padding-top: 3px;
 }
