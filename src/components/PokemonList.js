@@ -36,25 +36,30 @@ export default function PokemonList() {
 
     useEffect(() => {
         setLoading(true);
+
+        const fetchData = async () => {
+            const response = await fetch(currentPageUrl);
+            const data = await response.json();
+            setLoading(false);
+
+            console.log(data);
+
+            setNextPageUrl(prev => data.next);
+
+            setPrevPageUrl(prev => data.previous);
+
+            setPokemon(prev => data.results.map(value => value.name));
+
+            setPokeIndex(prev => data.results.map(value => value.url.split("/")[value.url.split("/").length - 2]))
+
+        }
+
         fetchData();
+
+
     }, [currentPageUrl])
 
-    const fetchData = async () => {
-        const response = await fetch(currentPageUrl);
-        const data = await response.json();
-        setLoading(false);
 
-        console.log(data);
-
-        setNextPageUrl(prev => data.next);
-
-        setPrevPageUrl(prev => data.previous);
-
-        setPokemon(prev => data.results.map(value => value.name));
-
-        setPokeIndex(prev => data.results.map(value => value.url.split("/")[value.url.split("/").length - 2]))
-
-    }
 
 
     const gotoNextPage = () => {
@@ -117,7 +122,6 @@ export default function PokemonList() {
 
 
     return (
-
         <div className="pokemon_list">
             <div className="search">
                 <input
