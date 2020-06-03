@@ -17,8 +17,7 @@ export default function PokemonList() {
         id: null,
         name: null,
         imgFront: null,
-        type1: null,
-        type2: null,
+        type: [],
         hp: null,
         attack: null,
         defense: null,
@@ -71,6 +70,9 @@ export default function PokemonList() {
 
 
     const onClickHandler = (e) => {
+
+        // to get the index of pokemon selected(clicked)
+
         let k = parseInt(e.target.getAttribute("data-index"));
 
         console.log(k);
@@ -86,22 +88,19 @@ export default function PokemonList() {
                     id: data.id,
                     name: data.name,
                     imgFront: data.sprites.front_default,
-                    type1: data.types[0].type.name,
-                    // type2: data.types[1].type.name,
+                    type: data.types,
                     hp: data.stats[5].base_stat,
                     speed: data.stats[0].base_stat,
                     defense: data.stats[3].base_stat,
                     attack: data.stats[4].base_stat,
                 }))
 
-                //Checking if the abilities array has only 0 index
-
                 setProfile(prev => ({
                     ...prev,
                     height: data.height,
                     weight: data.weight,
                     base: data.base_experience,
-                    ability: data.abilities,
+                    ability: data.abilities,     // copying the data.abilities array to ability
                 }))
 
 
@@ -111,8 +110,7 @@ export default function PokemonList() {
             })
     }
 
-
-    console.log(profile.ability[0]);
+    console.log(profile);
 
     return (
 
@@ -123,7 +121,7 @@ export default function PokemonList() {
             <ul>
                 {pokemon.map((value, index) => {
                     return (
-                        <li key={index} data-index={pokeIndex[index]} onClick={onClickHandler}>
+                        <li className="bob-on-hover" key={index} data-index={pokeIndex[index]} onClick={onClickHandler}>
                             <img
                                 data-index={pokeIndex[index]}
                                 src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeIndex[index]}.png`}
@@ -154,8 +152,17 @@ export default function PokemonList() {
                     <div>
                         <img src={stats.imgFront} alt="" width="150px" />
                         <ul className="types">
-                            <li name={stats.type1}>{stats.type1}</li>
-                            <li name={stats.type2}>{stats.type2}</li>
+
+                            {/* mapping the type array to display the types */}
+
+                            {stats.type.map(value => {
+                                return (
+                                    <li name={value.type.name}>{value.type.name}</li>
+                                )
+                            })}
+
+
+
                         </ul>
 
                         <ul className="stats">
@@ -177,7 +184,11 @@ export default function PokemonList() {
                             <li>Height : <p>{profile.height / 10} m</p></li>
                             <li>Weight : <p>{profile.weight / 10} kg</p></li>
                             <li>Base Experience : <p>{profile.base}</p></li>
-                            <li>Abilities : <p>{profile.ability[0]}, {profile.ability[1]}</p></li>
+                            <li>Abilities : {profile.ability.map(value => {
+                                return (
+                                    <p>{value.ability.name + ", "}</p>
+                                )
+                            })}</li>
                         </ul>
                     </div>
                 </div>

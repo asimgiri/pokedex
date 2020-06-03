@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +8,7 @@
 html, body, #root, .App {
     height: 100%;
     background: #E3350D;
+    font-family: 'Nunito', sans-serif;
 }
 
 button {
@@ -37,25 +39,22 @@ input:focus {
     width: 20%;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.pokemon_list ul li:focus {
-    background: red;
-}
-
-.pokemon_list ul li img {
-    user-select: none;
+    transition: 0.1s ease-in;
 }
 
 .pokemon_list h2 {
     font-weight: normal;
     color: #222;
+    width: fit-content;
+    margin: auto;
 }
 
 .pokemon_list p {
     font-size: 20px;
     margin: 5px 0;
     color: #666;
+    margin: auto;
+    width: fit-content;
 }
 
 .loading {
@@ -171,6 +170,14 @@ input[type="search"] {
     background: #98d8d8;
 }
 
+.inside div .types li[name="ghost"] {
+    background: #111;
+}
+
+.inside div .types li[name="rock"] {
+    background: #b9a138;
+}
+
 .stats {
     margin-top: 10%;
     font-size: 12px;
@@ -183,7 +190,7 @@ input[type="search"] {
 .bar {
     width: 300px;
     height: 20px;
-    background: #eee;
+    background: #ddd;
     margin: auto;
     margin-bottom: 20px;
     margin-top: 6px;
@@ -192,31 +199,105 @@ input[type="search"] {
 }
 
 .bar span {
-    background: rgb(227, 53, 13);
+    background: #3289db;
     display: block;
     height: 100%;
     padding-top: 3px;
 }
 
-.inside div:nth-child(2){
+.inside div:nth-child(2) {
     display: flex;
     justify-content: space-evenly;
     text-align: left;
 }
 
-.inside div:nth-child(2) li{
+.inside div:nth-child(2) li {
     display: block;
     margin: 30px 0;
 }
 
-.inside div:nth-child(2) li p{
+.inside div:nth-child(2) li p {
     font-size: 14px;
     color: #333;
-    display: inline;
+    display: inline-block;
+    white-space: nowrap;
 }
 
-.banner{
-    background: #eee;
+.banner {
+    background: #aaa;
     font-size: 20px;
     padding: 8px;
 }
+
+/* ------------------------------------ BOB PROPERTY -------------------------------------  */
+
+@-webkit-keyframes bob-on-hover {
+    0% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+    50% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes bob-on-hover {
+    0% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+    50% {
+        -webkit-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+
+@-webkit-keyframes bob-on-hover-float {
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes bob-on-hover-float {
+    100% {
+        -webkit-transform: translateY(-8px);
+        transform: translateY(-8px);
+    }
+}
+
+.bob-on-hover {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+.bob-on-hover:hover, .bob-on-hover:focus, .bob-on-hover:active {
+    -webkit-animation-name: bob-on-hover-float, bob-on-hover;
+    animation-name: bob-on-hover-float, bob-on-hover;
+    -webkit-animation-duration: .3s, 1.5s;
+    animation-duration: .3s, 1.5s;
+    -webkit-animation-delay: 0s, .3s;
+    animation-delay: 0s, .3s;
+    -webkit-animation-timing-function: ease-out, ease-in-out;
+    animation-timing-function: ease-out, ease-in-out;
+    -webkit-animation-iteration-count: 1, infinite;
+    animation-iteration-count: 1, infinite;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-direction: normal, alternate;
+    animation-direction: normal, alternate;
+}
+
+/* ------------------------------------ BOB PROPERTY -------------------------------------  */
