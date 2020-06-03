@@ -8,7 +8,7 @@ Modal.setAppElement('#root');
 export default function PokemonList() {
     const [pokemon, setPokemon] = useState([]);
     const [pokeIndex, setPokeIndex] = useState([]);
-    const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=24");
+    const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=800");  // pokemon displayed can be adjusted
     const [nextPageUrl, setNextPageUrl] = useState();
     const [prevPageUrl, setPrevPageUrl] = useState();
     const [loading, setLoading] = useState(true);
@@ -31,6 +31,7 @@ export default function PokemonList() {
         base: null,
         ability: [],
     })
+    const [keyword, setKeyword] = useState('');
 
 
     useEffect(() => {
@@ -38,21 +39,23 @@ export default function PokemonList() {
         fetchData();
     }, [currentPageUrl])
 
-    const fetchData = () => {
-        fetch(currentPageUrl)
-            .then(response => response.json())
-            .then(data => {
-                setLoading(false);
+    const fetchData = async () => {
+        const response = await fetch(currentPageUrl);
+        const data = await response.json();
+        setLoading(false);
 
-                setNextPageUrl(prev => data.next);
+        console.log(data);
 
-                setPrevPageUrl(prev => data.previous);
+        setNextPageUrl(prev => data.next);
 
-                setPokemon(prev => data.results.map(value => value.name));
+        setPrevPageUrl(prev => data.previous);
 
-                setPokeIndex(prev => data.results.map(value => value.url.split("/")[value.url.split("/").length - 2]))
-            })
+        setPokemon(prev => data.results.map(value => value.name));
+
+        setPokeIndex(prev => data.results.map(value => value.url.split("/")[value.url.split("/").length - 2]))
+
     }
+
 
     const gotoNextPage = () => {
         setCurrentPageUrl(nextPageUrl);
@@ -69,7 +72,7 @@ export default function PokemonList() {
     }
 
 
-    const onClickHandler = (e) => {
+    const onClickHandler = async (e) => {
 
         // to get the index of pokemon selected(clicked)
 
@@ -77,60 +80,75 @@ export default function PokemonList() {
 
         console.log(k);
 
-        fetch(`https://pokeapi.co/api/v2/pokemon/${k}`)
-            .then(response => response.json())
-            .then(data => {
-                setLoading(false);
-                console.log(data);
 
-                setStats(prev => ({
-                    ...prev,
-                    id: data.id,
-                    name: data.name,
-                    imgFront: data.sprites.front_default,
-                    type: data.types,
-                    hp: data.stats[5].base_stat,
-                    speed: data.stats[0].base_stat,
-                    defense: data.stats[3].base_stat,
-                    attack: data.stats[4].base_stat,
-                }))
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${k}`);
+        const data = await response.json();
+        setLoading(false);
 
-                setProfile(prev => ({
-                    ...prev,
-                    height: data.height,
-                    weight: data.weight,
-                    base: data.base_experience,
-                    ability: data.abilities,     // copying the data.abilities array to ability
-                }))
+        setStats(prev => ({
+            ...prev,
+            id: data.id,
+            name: data.name,
+            imgFront: data.sprites.front_default,
+            type: data.types,
+            hp: data.stats[5].base_stat,
+            speed: data.stats[0].base_stat,
+            defense: data.stats[3].base_stat,
+            attack: data.stats[4].base_stat,
+        }))
 
+        setProfile(prev => ({
+            ...prev,
+            height: data.height,
+            weight: data.weight,
+            base: data.base_experience,
+            ability: data.abilities,     // copying the data.abilities array to ability
+        }))
 
 
-                setModalState(true);
 
-            })
+        setModalState(true);
     }
 
-    console.log(profile);
+
+    const onClickSetKeyword = (e) => {
+        setKeyword(e.target.value);
+    }
+
 
     return (
 
         <div className="pokemon_list">
             <div className="search">
-                <input type="search" placeholder="Search Pokemon..." />
+                <input
+                    type="search"
+                    placeholder="Search Pokemon..."
+                    onChange={onClickSetKeyword}
+                    value={keyword}
+                />
             </div>
             <ul>
                 {pokemon.map((value, index) => {
-                    return (
-                        <li className="bob-on-hover" key={index} data-index={pokeIndex[index]} onClick={onClickHandler}>
-                            <img
-                                data-index={pokeIndex[index]}
-                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeIndex[index]}.png`}
-                                alt="pokemon"
-                            />
-                            <p>#{pokeIndex[index]}</p>
-                            <h2>{value}</h2>
-                        </li>
-                    )
+                    {
+                        return (
+
+                            // filtering according to the keywords
+
+                            // false && something is always false
+
+                            pokemon[index].includes(keyword) &&
+
+                            <li className="bob-on-hover" key={index} data-index={pokeIndex[index]} onClick={onClickHandler}>
+                                <img
+                                    data-index={pokeIndex[index]}
+                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeIndex[index]}.png`}
+                                    alt="pokemon"
+                                />
+                                <p>#{pokeIndex[index]}</p>
+                                <h2>{value}</h2>
+                            </li>
+                        )
+                    }
                 })}
             </ul>
 
@@ -155,9 +173,9 @@ export default function PokemonList() {
 
                             {/* mapping the type array to display the types */}
 
-                            {stats.type.map(value => {
+                            {stats.type.map((value, index) => {
                                 return (
-                                    <li name={value.type.name}>{value.type.name}</li>
+                                    <li key={index} name={value.type.name}>{value.type.name}</li>
                                 )
                             })}
 
@@ -184,9 +202,9 @@ export default function PokemonList() {
                             <li>Height : <p>{profile.height / 10} m</p></li>
                             <li>Weight : <p>{profile.weight / 10} kg</p></li>
                             <li>Base Experience : <p>{profile.base}</p></li>
-                            <li>Abilities : {profile.ability.map(value => {
+                            <li>Abilities : {profile.ability.map((value, index) => {
                                 return (
-                                    <p>{value.ability.name + ", "}</p>
+                                    <p key={index}>{value.ability.name + ", "}</p>
                                 )
                             })}</li>
                         </ul>

@@ -118,6 +118,8 @@ input[type="search"] {
     text-transform: uppercase;
 }
 
+/* --------------------------- POKEMON TYPES COLOR --------------------------------------- */
+
 .inside div .types li[name="poison"] {
     background: #934b92;
 }
@@ -131,7 +133,7 @@ input[type="search"] {
 }
 
 .inside div .types li[name="water"] {
-    background: #94b7e7;
+    background: #70a4ec;
 }
 
 .inside div .types li[name="bug"] {
@@ -163,7 +165,7 @@ input[type="search"] {
 }
 
 .inside div .types li[name="ground"] {
-    background: #e0bf68;
+    background: #b99c53;
 }
 
 .inside div .types li[name="ice"] {
@@ -177,6 +179,20 @@ input[type="search"] {
 .inside div .types li[name="rock"] {
     background: #b9a138;
 }
+
+.inside div .types li[name="steel"] {
+    background: #535455;
+}
+
+.inside div .types li[name="dragon"] {
+    background: #f47137;
+}
+
+.inside div .types li[name="dark"] {
+    background: #4a4a4a;
+}
+
+/* ---------------------------------------------------------------------------------------- */
 
 .stats {
     margin-top: 10%;
@@ -300,4 +316,4 @@ input[type="search"] {
     animation-direction: normal, alternate;
 }
 
-/* ------------------------------------ BOB PROPERTY -------------------------------------  */
+/* ---------------------------------------------------------------------------------------- */
