@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import Loading from './Loading';
 import Modal from 'react-modal';
+import Card from './Card';
+import DetailsModal from './DetailsModal';
+import Search from './Search';
 
 Modal.setAppElement('#root');
 
@@ -60,8 +63,6 @@ export default function PokemonList() {
     }, [currentPageUrl])
 
 
-
-
     const gotoNextPage = () => {
         setCurrentPageUrl(nextPageUrl);
     }
@@ -83,11 +84,9 @@ export default function PokemonList() {
 
         let k = parseInt(e.target.getAttribute("data-index"));
 
-        console.log(k);
-
-
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${k}`);
         const data = await response.json();
+
         setLoading(false);
 
         setStats(prev => ({
@@ -110,8 +109,6 @@ export default function PokemonList() {
             ability: data.abilities,     // copying the data.abilities array to ability
         }))
 
-
-
         setModalState(true);
     }
 
@@ -123,14 +120,12 @@ export default function PokemonList() {
 
     return (
         <div className="pokemon_list">
-            <div className="search">
-                <input
-                    type="search"
-                    placeholder="Search Pokemon..."
-                    onChange={onClickSetKeyword}
-                    value={keyword}
-                />
-            </div>
+
+            <Search
+                filterFn={onClickSetKeyword}
+                value={keyword}
+            />
+
             <ul>
                 {pokemon.map((value, index) => {
                     {
@@ -142,15 +137,12 @@ export default function PokemonList() {
 
                             pokemon[index].includes(keyword) &&
 
-                            <li className="bob-on-hover" key={index} data-index={pokeIndex[index]} onClick={onClickHandler}>
-                                <img
-                                    data-index={pokeIndex[index]}
-                                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeIndex[index]}.png`}
-                                    alt="pokemon"
-                                />
-                                <p>#{pokeIndex[index]}</p>
-                                <h2>{value}</h2>
-                            </li>
+                            <Card
+                                key={index}
+                                dataIndex={pokeIndex[index]}
+                                onClick={onClickHandler}
+                                name={value}
+                            />
                         )
                     }
                 })}
@@ -162,64 +154,26 @@ export default function PokemonList() {
                 style={{ overlay: { backgroundColor: 'rgba(0,0,0,.8)' } }}
                 id="modal"
             >
-                {/* <h2>{details.name}</h2>
-                <p>Modal body</p>
-                <button onClick={() => setModalState(false)}>Close</button> */}
 
-                <div>
-                    <h1><span>#{stats.id}</span> {stats.name}</h1>
-                </div>
+                <DetailsModal
+                    statID={stats.id}
+                    statName={stats.name}
+                    statImg={stats.imgFront}
+                    statType={stats.type}
+                    statHP={stats.hp}
+                    statAttack={stats.attack}
+                    statDefense={stats.defense}
+                    statSpeed={stats.speed}
 
-                <div className="inside">
-                    <div>
-                        <img src={stats.imgFront} alt="" width="150px" />
-                        <ul className="types">
-
-                            {/* mapping the type array to display the types */}
-
-                            {stats.type.map((value, index) => {
-                                return (
-                                    <li key={index} name={value.type.name}>{value.type.name}</li>
-                                )
-                            })}
-
-
-
-                        </ul>
-
-                        <ul className="stats">
-                            <li>HP</li>
-                            <li className="bar"><span style={{ width: `${stats.hp}px` }}>{stats.hp}</span></li>
-                            <li>Attack</li>
-                            <li className="bar"><span style={{ width: `${stats.attack}px` }}>{stats.attack}</span></li>
-                            <li>Defense</li>
-                            <li className="bar"><span style={{ width: `${stats.defense}px` }}>{stats.defense}</span></li>
-                            <li>Speed</li>
-                            <li className="bar"><span style={{ width: `${stats.speed}px` }}>{stats.speed}</span></li>
-                        </ul>
-                    </div>
-
-
-                    <div>
-                        <ul>
-                            <li className="banner">Profile</li>
-                            <li>Height : <p>{profile.height / 10} m</p></li>
-                            <li>Weight : <p>{profile.weight / 10} kg</p></li>
-                            <li>Base Experience : <p>{profile.base}</p></li>
-                            <li>Abilities : {profile.ability.map((value, index) => {
-                                return (
-                                    <p key={index}>{value.ability.name + ", "}</p>
-                                )
-                            })}</li>
-                        </ul>
-                    </div>
-                </div>
-
-
+                    profileHeight={profile.height}
+                    profileWeight={profile.weight}
+                    profileBase={profile.base}
+                    profileAbility={profile.ability}
+                />
 
             </Modal>
 
-
+            {/* best to use when pokemon limit is less */}
 
             <Pagination
                 gotoNextPage={nextPageUrl ? gotoNextPage : null}

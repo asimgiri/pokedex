@@ -1,0 +1,29 @@
+@media only screen and (max-width: 600px) {
+    .pokemon_list ul li {
+        width: 46%;
+        margin: 1%;
+    }
+    input[type="search"] {
+        width: 92%;
+    }
+    #modal {
+        width: 80%;
+    }
+    .inside div:nth-child(2) {
+        display: none;
+    }
+    #modal .inside {
+        justify-content: center;
+        align-items: center;
+    }
+    .bar {
+        width: auto;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    #modal {
+        width: 90%;
+        height: 50%;
+    }
+}

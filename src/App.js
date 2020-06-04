@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import PokemonList from './components/PokemonList';
+import './assets/responsive.css'
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
         <div className="logo">
           <div className="center"></div>
         </div>
+        <h1 className="title">POKEDEX</h1>
         <PokemonList />
       </div>
     </div>
