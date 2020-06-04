@@ -71,7 +71,7 @@ input:focus {
 }
 
 .title {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 20px;
     color: #fff;
 }

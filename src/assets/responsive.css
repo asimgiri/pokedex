@@ -8,6 +8,7 @@
     }
     #modal {
         width: 80%;
+        height: 60%;
     }
     .inside div:nth-child(2) {
         display: none;
@@ -19,11 +20,7 @@
     .bar {
         width: auto;
     }
-}
-
-@media only screen and (max-width: 1024px) {
-    #modal {
-        width: 90%;
-        height: 50%;
+    .inside img {
+        margin-top: 40% !important;
     }
 }
