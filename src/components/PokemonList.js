@@ -11,7 +11,10 @@ Modal.setAppElement('#root');
 export default function PokemonList() {
     const [pokemon, setPokemon] = useState([]);
     const [pokeIndex, setPokeIndex] = useState([]);
-    const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=800");  // pokemon displayed can be adjusted
+
+    // pokemon displayed can be limited to certain numbers
+    const [currentPageUrl, setCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=800");
+   
     const [nextPageUrl, setNextPageUrl] = useState();
     const [prevPageUrl, setPrevPageUrl] = useState();
     const [loading, setLoading] = useState(true);
@@ -116,7 +119,6 @@ export default function PokemonList() {
     const onClickSetKeyword = (e) => {
         setKeyword(e.target.value);
     }
-
 
     return (
         <div className="pokemon_list">
